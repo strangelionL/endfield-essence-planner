@@ -37,6 +37,15 @@
         min-height: 100vh;
         font-family: var(--font-body);
         color: var(--text);
+        background: var(--bg-0);
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
         background-image:
           radial-gradient(1200px 800px at 8% 10%, rgba(77, 214, 201, 0.18), transparent 55%),
           radial-gradient(1000px 700px at 92% 0%, rgba(242, 182, 50, 0.12), transparent 50%),
@@ -46,7 +55,13 @@
         background-size: auto, auto, auto, auto, cover;
         background-position: center, center, center, center, center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        opacity: 1;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+
+      html.preload body::before {
+        opacity: 0;
       }
 
       body::before {
