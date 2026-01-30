@@ -1,6 +1,15 @@
       const dungeons = Array.isArray(window.DUNGEONS) ? window.DUNGEONS : [];
       const weapons = Array.isArray(window.WEAPONS) ? window.WEAPONS : [];
       const weaponImages = new Set(Array.isArray(window.WEAPON_IMAGES) ? window.WEAPON_IMAGES : []);
+      const finishPreload = () => {
+        try {
+          if (typeof window !== "undefined" && typeof window.__finishPreload === "function") {
+            window.__finishPreload();
+          }
+        } catch (error) {
+          // ignore
+        }
+      };
 
       const S1_ORDER = ["敏捷提升", "力量提升", "意志提升", "智识提升", "主能力提升"];
 
@@ -40,9 +49,11 @@
       const { createApp, ref, computed, onMounted, onBeforeUnmount, watch, nextTick } = Vue || {};
 
       if (!createApp) {
+        finishPreload();
         document.body.innerHTML =
           "<div style='padding:24px;color:#f36c6c;font-family:Microsoft YaHei UI;'>未找到 Vue 3 本地文件：请将 vue.global.prod.js 放入 ./vendor/</div>";
       } else if (!dungeons.length || !weapons.length) {
+        finishPreload();
         document.body.innerHTML =
           "<div style='padding:24px;color:#f36c6c;font-family:Microsoft YaHei UI;'>缺少数据文件：请确认 ./data/dungeons.js 与 ./data/weapons.js</div>";
       } else {
@@ -64,6 +75,8 @@
               const lowGpuEnabled = ref(false);
               const perfPreference = ref("auto");
               const showPerfNotice = ref(false);
+              const perfAutoCooldownMs = 2500;
+              let perfAutoBlockedUntil = 0;
               const defaultAnnouncement = {
                 version: "",
                 title: "公告",
@@ -392,8 +405,23 @@
             let perfLagTimeout = null;
             let longTaskObserver = null;
 
+            const blockAutoSwitch = (durationMs) => {
+              perfAutoBlockedUntil = Math.max(
+                perfAutoBlockedUntil,
+                performance.now() + (durationMs || 0)
+              );
+            };
+
+            const canAutoSwitch = () => {
+              if (document.visibilityState && document.visibilityState !== "visible") {
+                return false;
+              }
+              return performance.now() >= perfAutoBlockedUntil;
+            };
+
             const autoSwitchToLowGpu = () => {
               if (perfPreference.value !== "auto" || lowGpuEnabled.value) return;
+              if (!canAutoSwitch()) return;
               applyLowGpuMode(true);
               showPerfNotice.value = true;
             };
@@ -494,6 +522,7 @@
                 return;
               }
               perfPreference.value = "auto";
+              blockAutoSwitch(perfAutoCooldownMs);
               startAutoMonitors();
               const onUserActivity = (event) => {
                 if (readPerfMode()) {
@@ -537,6 +566,7 @@
               writePerfMode("");
               applyLowGpuMode(false);
               stopAutoMonitors();
+              blockAutoSwitch(perfAutoCooldownMs);
               startAutoMonitors();
             };
 
@@ -561,6 +591,11 @@
               }
               initPerfMode();
               document.addEventListener("click", handleDocClick);
+              if (typeof nextTick === "function") {
+                nextTick(() => requestAnimationFrame(() => finishPreload()));
+              } else {
+                requestAnimationFrame(() => finishPreload());
+              }
             });
 
             onBeforeUnmount(() => {
