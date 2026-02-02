@@ -166,7 +166,7 @@ window.I18N["en"] = {
       "敏捷提升": "Agility Boost",
       "力量提升": "Strength Boost",
       "意志提升": "Will Boost",
-      "智识提升": "Intelligence Boost",
+      "智识提升": "Intellect Boost",
       "主能力提升": "Main Attribute Boost"
     },
     "s2": {
