@@ -80,7 +80,7 @@ window.CONTENT = {
     ],
     sponsor: {
       title: "赞助支持",
-      text: "您的赞助将用于服务器维护，功能开发，内容创作",
+      text: "您的赞助将用于服务器维护,功能开发,内容创作;您在备注中填写的内容会显示在赞助列表中(手动更新),如不希望在赞助列表中被记录请注明; 您的鼓励与认可都是我维护的动力!!!",
       items: [
         { label: "支付宝", src: "sponsors/alipay.jpg" },
         { label: "微信赞赏码", src: "sponsors/wechat.png" },

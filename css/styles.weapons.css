@@ -1,0 +1,895 @@
+      .weapon-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+        gap: 8px;
+      }
+
+      @media (max-width: 640px) {
+        .weapon-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .weapon-item {
+          min-height: 0;
+        }
+      }
+
+      @media (max-width: 1024px) and (orientation: landscape) {
+        .recommendations {
+          gap: 12px;
+        }
+
+        .card {
+          padding: 16px;
+          border-radius: 16px;
+        }
+
+        .card-header {
+          margin-bottom: 12px;
+          gap: 8px 12px;
+        }
+
+        .card-title {
+          font-size: 16px;
+        }
+
+        .scheme-weapon-list {
+          gap: 8px;
+        }
+
+        .scheme-weapon-item {
+          padding: 10px 12px;
+          gap: 4px;
+        }
+
+        .scheme-weapon-title {
+          font-size: 13px;
+        }
+
+        .scheme-weapon-title .badge {
+          font-size: 10px;
+          padding: 2px 6px;
+        }
+
+        .scheme-weapon-title .rarity {
+          font-size: 10px;
+        }
+
+        .scheme-weapon-title .weapon-avatars {
+          gap: 4px;
+        }
+
+        .scheme-weapon-title .weapon-avatar {
+          width: 22px;
+          height: 22px;
+        }
+
+        .scheme-weapon-attrs {
+          font-size: 11px;
+          gap: 4px 8px;
+        }
+
+        .attr-value {
+          padding: 2px 6px;
+        }
+
+        .attr-value.attr-meta .weapon-avatar {
+          width: 18px;
+          height: 18px;
+        }
+
+        .attr-value.attr-meta .weapon-short {
+          font-size: 10px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .app-shell {
+          padding: 18px 14px 28px;
+        }
+
+        .hero h1 {
+          font-size: 22px;
+          letter-spacing: 0.06em;
+        }
+
+        .hero p {
+          font-size: 12px;
+          line-height: 1.5;
+        }
+
+        .mobile-tabs {
+          margin-bottom: 10px;
+          top: 8px;
+        }
+
+        .mobile-tab {
+          padding: 6px 10px;
+          font-size: 11px;
+        }
+
+        .mobile-tab .count {
+          font-size: 9px;
+        }
+
+        .mobile-hint {
+          margin: 4px 0 10px;
+          padding: 6px 10px;
+          font-size: 11px;
+        }
+
+        .back-to-top {
+          right: 12px;
+          bottom: 28px;
+          width: 34px;
+          height: 34px;
+          font-size: 13px;
+        }
+
+        .panel {
+          padding: 14px;
+          border-radius: 14px;
+        }
+
+        .panel-title {
+          margin-bottom: 12px;
+        }
+
+        .panel-title h2 {
+          font-size: 14px;
+        }
+
+        .ghost-button {
+          padding: 4px 10px;
+          font-size: 11px;
+        }
+
+        .search-box {
+          padding: 8px 10px;
+          margin-bottom: 12px;
+        }
+
+        .search-box input {
+          font-size: 12px;
+        }
+
+        .tag-row {
+          gap: 6px;
+          margin-bottom: 10px;
+        }
+
+        .tag {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+
+        .filter-panel {
+          padding: 8px 10px;
+          gap: 8px;
+        }
+
+        .filter-title {
+          font-size: 10px;
+        }
+
+        .filter-chip {
+          padding: 3px 8px;
+          font-size: 11px;
+        }
+
+        .weapon-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .weapon-item {
+          min-height: 0;
+          border-radius: 7px;
+        }
+
+        .weapon-band {
+          height: 34px;
+        }
+
+        .weapon-name {
+          bottom: 8px;
+          height: 24px;
+          font-size: 11px;
+        }
+
+        .weapon-short {
+          font-size: 9px;
+        }
+
+        .weapon-avatars {
+          top: 6px;
+          left: 6px;
+          gap: 3px;
+        }
+
+        .weapon-avatar {
+          width: 20px;
+          height: 20px;
+        }
+
+        .scheme-weapon-title .weapon-avatars {
+          gap: 2px;
+        }
+
+        .scheme-weapon-title .weapon-avatar {
+          width: 12px;
+          height: 12px;
+        }
+
+        .recommendations {
+          gap: 5px;
+        }
+
+        .card {
+          padding: 6px;
+          border-radius: 14px;
+        }
+
+        .card-header {
+          margin-bottom: 4px;
+          gap: 4px 6px;
+        }
+
+        .card-title {
+          font-size: 11px;
+        }
+
+        .pill {
+          padding: 2px 5px;
+          font-size: 8px;
+        }
+
+        .s1-block {
+          padding: 4px;
+        }
+
+        .s1-header {
+          gap: 4px 6px;
+        }
+
+        .chip-row {
+          gap: 6px;
+        }
+
+        .chip {
+          padding: 2px 5px;
+          font-size: 8px;
+        }
+
+        .hint {
+          font-size: 8px;
+        }
+
+        .lock-summary {
+          padding: 4px;
+          gap: 4px;
+          margin: 6px 0 8px;
+        }
+
+        .lock-items {
+          gap: 4px;
+        }
+
+        .lock-chip {
+          padding: 3px 6px;
+          font-size: 8px;
+        }
+
+        .scheme-weapon-list {
+          gap: 2px;
+          margin-top: 6px;
+        }
+
+        .scheme-weapon-item {
+          padding: 3px 4px;
+          gap: 2px;
+        }
+
+        .scheme-weapon-title {
+          font-size: 10px;
+          padding-right: 44px;
+        }
+
+        .scheme-weapon-title .badge {
+          font-size: 8px;
+          padding: 1px 4px;
+        }
+
+        .scheme-weapon-title .rarity {
+          font-size: 7px;
+        }
+
+        .scheme-weapon-title .weapon-short {
+          font-size: 10px;
+          max-width: 50%;
+          top: -1px;
+        }
+
+        .scheme-weapon-attrs {
+          font-size: 8px;
+          gap: 3px 4px;
+          line-height: 1.2;
+        }
+
+        .scheme-weapon-attrs.is-wrapped {
+          font-size: 8px;
+          line-height: 1.2;
+        }
+
+        .attr-value {
+          padding: 1px 3px;
+        }
+
+        .attr-value.attr-meta .weapon-avatar {
+          width: 9px;
+          height: 9px;
+        }
+
+        .attr-value.attr-meta .weapon-short {
+          font-size: 7px;
+        }
+      }
+
+
+      .weapon-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        min-height: 124px;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
+        border: 1px solid var(--stroke);
+        background: rgba(12, 14, 18, 0.92);
+        cursor: pointer;
+        transition: 0.2s ease;
+        overflow: hidden;
+      }
+
+      .weapon-item:hover {
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: none;
+      }
+
+      .weapon-item.is-selected {
+        border-color: rgba(77, 214, 201, 0.5);
+        box-shadow: 0 0 0 1px rgba(77, 214, 201, 0.35), 0 12px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .weapon-item.is-excluded {
+        opacity: 0.45;
+      }
+
+      .weapon-item.is-excluded .weapon-name {
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
+
+      .exclude-toggle {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 5;
+        padding: 4px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(243, 108, 108, 0.4);
+        background: rgba(243, 108, 108, 0.12);
+        color: #ffd1d1;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .secondary-menu {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .menu-toggle {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+      }
+
+      .secondary-panel {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        min-width: 220px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(12, 18, 28, 0.98);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+        z-index: 20;
+      }
+
+      .secondary-item {
+        display: grid;
+        gap: 6px;
+        padding: 6px 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .secondary-label {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+
+      .secondary-select {
+        width: 100%;
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid var(--stroke);
+        background: rgba(8, 12, 18, 0.7);
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .secondary-hint {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .secondary-desc {
+        border-top: 1px dashed rgba(255, 255, 255, 0.12);
+        padding-top: 8px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .perf-notice {
+        margin: 0 0 16px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(240, 180, 90, 0.35);
+        background: rgba(240, 180, 90, 0.08);
+        color: #ffd9b6;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 14px;
+      }
+
+      .perf-status {
+        margin: 0 0 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px dashed rgba(77, 214, 201, 0.3);
+        background: rgba(12, 18, 28, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .perf-status-text {
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .perf-notice-text {
+        flex: 1;
+        min-width: 240px;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .perf-notice-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .perf-keep {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .exclude-toggle:hover {
+        border-color: rgba(243, 108, 108, 0.8);
+        background: rgba(243, 108, 108, 0.22);
+      }
+
+      .exclude-toggle.active {
+        border-color: rgba(243, 108, 108, 0.85);
+        background: rgba(243, 108, 108, 0.3);
+      }
+
+      .exclude-toggle.small {
+        position: static;
+        padding: 2px 8px;
+        font-size: 11px;
+      }
+
+      .exclude-note-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 5;
+        padding: 2px 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(154, 165, 177, 0.45);
+        background: rgba(154, 165, 177, 0.12);
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .weapon-item::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0);
+        background: rgba(255, 255, 255, 0);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        opacity: 0;
+        transition: 0.2s ease;
+        z-index: 4;
+        pointer-events: none;
+      }
+
+      .weapon-item:hover::after {
+        opacity: 1;
+        border-color: rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+      }
+
+      .weapon-item::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--weapon-frame-bg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.9;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .weapon-item.rarity-6 .weapon-name {
+        background-image: var(--rarity-6-frame);
+      }
+
+      .weapon-item.rarity-5 .weapon-name {
+        background-image: var(--rarity-5-frame);
+      }
+
+      .weapon-art {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .weapon-figure {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        padding: 0;
+        filter: none;
+      }
+
+      .weapon-fallback-large {
+        font-weight: 700;
+        color: #e6e9ef;
+      }
+
+      .weapon-band {
+        position: absolute;
+        left: -1px;
+        right: -1px;
+        bottom: 0;
+        height: 42.5px;
+        background-image: linear-gradient(90deg, rgba(122, 118, 148, 0.7), rgba(84, 82, 110, 0.9));
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        z-index: 2;
+      }
+
+      .weapon-item.rarity-6 .weapon-band {
+        background-image: var(--rarity-6-frame);
+      }
+
+      .weapon-item.rarity-5 .weapon-band {
+        background-image: var(--rarity-5-frame);
+      }
+
+      .weapon-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8px;
+        font-family: "SF Pro", "Noto Sans", "Segoe UI", "Helvetica Neue",
+          "Source Han Sans", "Arial", system-ui, sans-serif;
+        font-size: 14px;
+        line-height: 120%;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-align: center;
+        color: #f5f2ee;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+        z-index: 3;
+      }
+
+      .weapon-title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+      }
+
+      .weapon-short {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        font-size: 11px;
+        line-height: 1.1;
+        font-weight: 500;
+        color: rgba(245, 242, 238, 0.8);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+
+      .weapon-avatars {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        display: flex;
+        gap: 4px;
+        pointer-events: none;
+        z-index: 3;
+      }
+
+      .weapon-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: rgba(10, 14, 22, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+      }
+
+      .scheme-weapon-title .weapon-avatars {
+        position: static;
+        top: auto;
+        left: auto;
+        gap: 6px;
+      }
+
+      .scheme-weapon-title .weapon-avatar {
+        width: 28px;
+        height: 28px;
+      }
+
+      .weapon-attr-list {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .weapon-attr-item {
+        cursor: pointer;
+        transition: 0.2s ease;
+        min-width: 0;
+      }
+
+      .weapon-attr-item .attr-value {
+        max-width: 100%;
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      .weapon-attr-item:hover {
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      .weapon-attr-item.is-excluded {
+        opacity: 0.5;
+      }
+
+      .weapon-attr-item.is-excluded .scheme-weapon-title {
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
+
+      .weapon-exclude-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .exclude-note-input {
+        flex: 1;
+        min-width: 0;
+        padding: 4px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(10, 14, 20, 0.45);
+        color: var(--text);
+        font-size: 12px;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+
+      .exclude-note-input::placeholder {
+        color: var(--muted);
+      }
+
+      .exclude-note-input:focus {
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      .exclude-note-input.is-excluded {
+        border-color: rgba(243, 108, 108, 0.45);
+        color: #ffd1d1;
+      }
+
+      .exclude-note-input.is-excluded::placeholder {
+        color: rgba(255, 209, 209, 0.7);
+      }
+
+      .missing-details {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .missing-details summary {
+        cursor: pointer;
+        color: #ffb7b7;
+        font-weight: 600;
+      }
+
+      .missing-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .missing-tag {
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(243, 108, 108, 0.45);
+        background: rgba(243, 108, 108, 0.12);
+        color: #ffd1d1;
+        font-size: 11px;
+      }
+
+      .fade-scale-enter-active,
+      .fade-scale-leave-active {
+        transition: opacity 0.22s ease;
+      }
+
+      .fade-scale-enter-from,
+      .fade-scale-leave-to {
+        opacity: 0;
+      }
+
+      .fade-scale-enter-active .about-card,
+      .fade-scale-leave-active .about-card {
+        transition: transform 0.22s ease, opacity 0.22s ease;
+      }
+
+      .fade-scale-enter-from .about-card,
+      .fade-scale-leave-to .about-card {
+        transform: translateY(8px) scale(0.98);
+        opacity: 0;
+      }
+
+      .collapse-enter-active,
+      .collapse-leave-active {
+        transition: max-height 0.25s ease, opacity 0.25s ease;
+        overflow: hidden;
+      }
+
+      .collapse-enter-from,
+      .collapse-leave-to {
+        max-height: 0;
+        opacity: 0;
+      }
+
+      .collapse-enter-to,
+      .collapse-leave-from {
+        max-height: 1200px;
+        opacity: 1;
+      }
+
+      .weapon-mini {
+        display: grid;
+        place-items: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+
+      .weapon-mini img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 4px;
+      }
+
+      .weapon-fallback {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 12px;
+        color: #0c1118;
+      }
+
+      @media (max-width: 640px) {
+        .weapon-mini {
+          width: 56px;
+          height: 56px;
+        }
+
+        .weapon-mini img {
+          padding: 3px;
+        }
+
+        .weapon-fallback {
+          font-size: 10px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .weapon-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .weapon-item {
+          min-height: 0;
+        }
+
+        .weapon-mini {
+          width: 48px;
+          height: 48px;
+        }
+
+        .weapon-mini img {
+          padding: 2px;
+        }
+
+        .weapon-fallback {
+          font-size: 9px;
+        }
+      }
+
