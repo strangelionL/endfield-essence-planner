@@ -46,14 +46,25 @@
 
       const compareText = (a, b) => (a || "").localeCompare(b || "", "zh-Hans-CN");
 
-      const getBaseAttrSorter = (secondaryKey, tertiaryKey, selectedSet) => (a, b) => {
-        const baseDiff = getS1OrderIndex(a.s1) - getS1OrderIndex(b.s1);
-        if (baseDiff !== 0) return baseDiff;
+      const getBaseCount = (counts, key) => {
+        if (!counts) return 0;
+        if (typeof counts.get === "function") return counts.get(key) || 0;
+        return counts[key] || 0;
+      };
+
+      const getBaseAttrSorter =
+        (secondaryKey, tertiaryKey, selectedSet, baseCounts) => (a, b) => {
         if (selectedSet) {
           const selectedDiff =
             (selectedSet.has(b.name) ? 1 : 0) - (selectedSet.has(a.name) ? 1 : 0);
           if (selectedDiff !== 0) return selectedDiff;
         }
+        if (baseCounts) {
+          const baseCountDiff = getBaseCount(baseCounts, b.s1) - getBaseCount(baseCounts, a.s1);
+          if (baseCountDiff !== 0) return baseCountDiff;
+        }
+        const baseDiff = getS1OrderIndex(a.s1) - getS1OrderIndex(b.s1);
+        if (baseDiff !== 0) return baseDiff;
         const secondaryDiff = compareText(a[secondaryKey], b[secondaryKey]);
         if (secondaryDiff !== 0) return secondaryDiff;
         if (tertiaryKey) {
@@ -64,9 +75,9 @@
         return compareText(a.name, b.name);
       };
 
-      const getSchemeWeaponSorter = (lockType, selectedSet) => {
+      const getSchemeWeaponSorter = (lockType, selectedSet, baseCounts) => {
         const secondaryKey = lockType === "s2" ? "s3" : "s2";
-        return getBaseAttrSorter(secondaryKey, null, selectedSet);
+        return getBaseAttrSorter(secondaryKey, null, selectedSet, baseCounts);
       };
 
       const getConflictInfo = (weapon, dungeon, lockOption) => {
@@ -287,6 +298,55 @@
               i18nState.t = t;
               i18nState.tTerm = tTerm;
               i18nState.locale = locale.value;
+              const baseSortedWeapons = weapons
+                .slice()
+                .sort((a, b) => {
+                  if (b.rarity !== a.rarity) return b.rarity - a.rarity;
+                  return compareText(a.name, b.name);
+                });
+              const weaponCharacterMap = new Map();
+              const weaponImageSrcCache = new Map();
+              const characterImageSrcCache = new Map();
+              const weaponSearchIndex = ref(new Map());
+              baseSortedWeapons.forEach((weapon) => {
+                const chars = Array.isArray(weapon.chars) ? weapon.chars.filter(Boolean) : [];
+                const uniqueChars = Array.from(new Set(chars));
+                weaponCharacterMap.set(weapon.name, uniqueChars);
+                weaponImageSrcCache.set(weapon.name, encodeURI(`./image/${weapon.name}.png`));
+                uniqueChars.forEach((name) => {
+                  if (!characterImageSrcCache.has(name)) {
+                    characterImageSrcCache.set(name, encodeURI(`./image/characters/${name}.png`));
+                  }
+                });
+              });
+              const buildWeaponSearchIndex = () => {
+                const index = new Map();
+                baseSortedWeapons.forEach((weapon) => {
+                  const characters = weaponCharacterMap.get(weapon.name) || [];
+                  const searchText = normalizeText(
+                    [
+                      weapon.name,
+                      tTerm("weapon", weapon.name),
+                      weapon.short,
+                      tTerm("short", weapon.short),
+                      weapon.type,
+                      tTerm("type", weapon.type),
+                      weapon.s1,
+                      tTerm("s1", weapon.s1),
+                      weapon.s2,
+                      tTerm("s2", weapon.s2),
+                      weapon.s3,
+                      tTerm("s3", weapon.s3),
+                      characters.join(" "),
+                      characters.map((name) => tTerm("character", name)).join(" "),
+                    ].join(" ")
+                  );
+                  index.set(weapon.name, searchText);
+                });
+                weaponSearchIndex.value = index;
+              };
+              buildWeaponSearchIndex();
+              watch(locale, buildWeaponSearchIndex);
               const content = window.CONTENT || {};
               const sponsorEntries = Array.isArray(window.SPONSORS) ? window.SPONSORS : [];
               const normalizeSponsorList = (list) => {
@@ -1437,38 +1497,16 @@
 
             const filteredWeapons = computed(() => {
               const query = normalizeText(searchQuery.value);
-              const getSearchText = (weapon) =>
-                normalizeText(
-                  [
-                    weapon.name,
-                    tTerm("weapon", weapon.name),
-                    weapon.short,
-                    tTerm("short", weapon.short),
-                    weapon.type,
-                    Array.isArray(weapon.chars) ? weapon.chars.join(" ") : "",
-                    Array.isArray(weapon.chars) ? weapon.chars.map((name) => tTerm("character", name)).join(" ") : "",
-                    tTerm("type", weapon.type),
-                    weapon.s1,
-                    tTerm("s1", weapon.s1),
-                    weapon.s2,
-                    tTerm("s2", weapon.s2),
-                    weapon.s3,
-                    tTerm("s3", weapon.s3),
-                  ].join(" ")
-                );
-              return weapons
+              const searchIndex = weaponSearchIndex.value;
+              return baseSortedWeapons
                 .filter((weapon) => {
-                  const matchQuery = !query || getSearchText(weapon).includes(query);
+                  const matchQuery =
+                    !query || (searchIndex.get(weapon.name) || "").includes(query);
                   if (!matchQuery) return false;
                   if (filterS1.value.length && !filterS1.value.includes(weapon.s1)) return false;
                   if (filterS2.value.length && !filterS2.value.includes(weapon.s2)) return false;
                   if (filterS3.value.length && !filterS3.value.includes(weapon.s3)) return false;
                   return true;
-                })
-                .slice()
-                .sort((a, b) => {
-                  if (b.rarity !== a.rarity) return b.rarity - a.rarity;
-                  return a.name.localeCompare(b.name, "zh-Hans-CN");
                 });
             });
 
@@ -1510,19 +1548,22 @@
                   if (!matchedSelected.length) return;
 
                   const schemeKey = `${dungeon.id}-${option.type}-${option.value}`;
-                  const selectedSortSet = new Set(targets.map((weapon) => weapon.name));
-                  const schemeWeaponSorter = getSchemeWeaponSorter(option.type, selectedSortSet);
-
-                  const schemeWeapons = weapons
-                    .filter((weapon) => isWeaponCompatible(weapon, dungeon, option))
-                    .slice()
-                    .sort(schemeWeaponSorter);
+                  const schemeWeapons = weapons.filter((weapon) =>
+                    isWeaponCompatible(weapon, dungeon, option)
+                  );
 
                   const schemeWeaponsActive = schemeWeapons.filter(
                     (weapon) => !excludedSet.has(weapon.name)
                   );
 
                   const baseCounts = countBy(schemeWeaponsActive.map((weapon) => weapon.s1));
+                  const selectedSortSet = new Set(targets.map((weapon) => weapon.name));
+                  const schemeWeaponSorter = getSchemeWeaponSorter(
+                    option.type,
+                    selectedSortSet,
+                    baseCounts
+                  );
+                  const schemeWeaponsSorted = schemeWeapons.slice().sort(schemeWeaponSorter);
                   const baseKeys = Object.keys(baseCounts);
                   const baseSorted = baseKeys.sort((a, b) => {
                     if (baseCounts[b] !== baseCounts[a]) return baseCounts[b] - baseCounts[a];
@@ -1583,7 +1624,7 @@
                     overflow: baseOverflow && !baseAutoPick.includes(key),
                   }));
 
-                  const planWeapons = schemeWeapons.slice();
+                  const planWeapons = schemeWeaponsSorted.slice();
                   const incompatibleSelected = targets
                     .filter((weapon) => !isWeaponCompatible(weapon, dungeon, option))
                     .slice()
@@ -2178,7 +2219,7 @@
 
               const weaponRows = targets
                 .slice()
-                .sort(getBaseAttrSorter("s2", "s3"))
+                .sort(getBaseAttrSorter("s2", "s3", null, baseCounts))
                 .map((weapon) => ({
                   ...weapon,
                   baseLocked: basePick.includes(weapon.s1),
@@ -2402,13 +2443,39 @@
             );
 
             const hasImage = (weapon) => weaponImages.has(weapon.name);
-            const weaponImageSrc = (weapon) => encodeURI(`./image/${weapon.name}.png`);
-            const weaponCharacters = (weapon) => {
-              if (!weapon || !Array.isArray(weapon.chars)) return [];
-              const unique = new Set(weapon.chars.filter(Boolean));
-              return Array.from(unique);
+            const weaponImageSrc = (weapon) => {
+              if (!weapon) return "";
+              const cached = weaponImageSrcCache.get(weapon.name);
+              if (cached) return cached;
+              const src = encodeURI(`./image/${weapon.name}.png`);
+              weaponImageSrcCache.set(weapon.name, src);
+              return src;
             };
-            const characterImageSrc = (name) => encodeURI(`./image/characters/${name}.png`);
+            const weaponCharacters = (weapon) => {
+              if (!weapon) return [];
+              const cached = weaponCharacterMap.get(weapon.name);
+              if (cached) return cached;
+              const chars = Array.isArray(weapon.chars) ? weapon.chars.filter(Boolean) : [];
+              const uniqueChars = Array.from(new Set(chars));
+              weaponCharacterMap.set(weapon.name, uniqueChars);
+              uniqueChars.forEach((name) => {
+                if (!characterImageSrcCache.has(name)) {
+                  characterImageSrcCache.set(
+                    name,
+                    encodeURI(`./image/characters/${name}.png`)
+                  );
+                }
+              });
+              return uniqueChars;
+            };
+            const characterImageSrc = (name) => {
+              if (!name) return "";
+              const cached = characterImageSrcCache.get(name);
+              if (cached) return cached;
+              const src = encodeURI(`./image/characters/${name}.png`);
+              characterImageSrcCache.set(name, src);
+              return src;
+            };
             const handleCharacterImageError = (event) => {
               const target = event && event.target;
               if (target) target.style.display = "none";

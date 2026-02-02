@@ -30,6 +30,39 @@
       src="https://umami.canmoe.com/umcmx.js"
       data-website-id="98084554-f35b-4100-8bd4-262f490c9ae2"
     ></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?675464d4b6500379e28adbfeb2ce0b40";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FQ81EJB28L"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-FQ81EJB28L");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "vb1z842wno");
+    </script>
     <style>
       html.preload body {
         background: #0b0f14;
@@ -344,6 +377,7 @@
               v-for="weapon in filteredWeapons"
               :key="weapon.name"
               class="weapon-item"
+              v-memo="[locale, selectedNameSet.has(weapon.name), isExcluded(weapon.name)]"
               :class="{
                 'is-selected': selectedNameSet.has(weapon.name),
                 'is-excluded': isExcluded(weapon.name),
@@ -358,6 +392,8 @@
                   class="weapon-figure"
                   :src="weaponImageSrc(weapon)"
                   :alt="weapon.name"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span v-else class="weapon-fallback-large">{{ weapon.rarity }}★</span>
               </div>
@@ -369,6 +405,7 @@
                   :src="characterImageSrc(character)"
                   :alt="tTerm('character', character)"
                   loading="lazy"
+                  decoding="async"
                   @error="handleCharacterImageError"
                 />
               </div>
@@ -397,6 +434,7 @@
                     :src="characterImageSrc(character)"
                     :alt="tTerm('character', character)"
                     loading="lazy"
+                    decoding="async"
                     @error="handleCharacterImageError"
                   />
                 </span>
@@ -446,6 +484,15 @@
               v-for="weapon in filteredWeapons"
               :key="weapon.name"
               class="scheme-weapon-item weapon-attr-item"
+              v-memo="[
+                locale,
+                selectedNameSet.has(weapon.name),
+                isExcluded(weapon.name),
+                filterS1.includes(weapon.s1),
+                filterS2.includes(weapon.s2),
+                filterS3.includes(weapon.s3),
+                getWeaponNote(weapon.name),
+              ]"
               :class="{
                 'is-selected': selectedNameSet.has(weapon.name),
                 'is-excluded': isExcluded(weapon.name),
@@ -457,7 +504,13 @@
                   class="weapon-mini"
                   :style="rarityBadgeStyle(weapon.rarity, hasImage(weapon))"
                 >
-                  <img v-if="hasImage(weapon)" :src="weaponImageSrc(weapon)" :alt="weapon.name" />
+                  <img
+                    v-if="hasImage(weapon)"
+                    :src="weaponImageSrc(weapon)"
+                    :alt="weapon.name"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <span v-else class="weapon-fallback">{{ weapon.rarity }}★</span>
                 </div>
                 <span v-if="weaponCharacters(weapon).length" class="weapon-avatars">
@@ -468,6 +521,7 @@
                     :src="characterImageSrc(character)"
                     :alt="tTerm('character', character)"
                     loading="lazy"
+                    decoding="async"
                     @error="handleCharacterImageError"
                   />
                 </span>
@@ -585,6 +639,15 @@
                   v-for="weapon in fallbackPlan.weaponRows"
                   :key="weapon.name"
                   class="scheme-weapon-item is-selected"
+                  v-memo="[
+                    locale,
+                    weapon.baseLocked,
+                    weapon.baseConflict,
+                    fallbackPlan.s2Conflict,
+                    fallbackPlan.s3Conflict,
+                    isExcluded(weapon.name),
+                    getWeaponNote(weapon.name),
+                  ]"
                 >
                   <div class="scheme-weapon-title">
                     <span v-if="weaponCharacters(weapon).length" class="weapon-avatars">
@@ -595,6 +658,7 @@
                         :src="characterImageSrc(character)"
                         :alt="tTerm('character', character)"
                         loading="lazy"
+                        decoding="async"
                         @error="handleCharacterImageError"
                       />
                     </span>
@@ -798,6 +862,13 @@
                       v-for="weapon in card.conflictSelected"
                       :key="weapon.name"
                       class="scheme-weapon-item is-selected is-disabled"
+                      v-memo="[
+                        locale,
+                        weapon.conflictS2,
+                        weapon.conflictS3,
+                        weapon.conflictReason,
+                        weapon.note,
+                      ]"
                     >
                       <div class="scheme-weapon-title">
                         <div
@@ -808,6 +879,8 @@
                             v-if="hasImage(weapon)"
                             :src="weaponImageSrc(weapon)"
                             :alt="weapon.name"
+                            loading="lazy"
+                            decoding="async"
                           />
                           <span v-else class="weapon-fallback">{{ weapon.rarity }}★</span>
                         </div>
@@ -819,6 +892,7 @@
                             :src="characterImageSrc(character)"
                             :alt="tTerm('character', character)"
                             loading="lazy"
+                            decoding="async"
                             @error="handleCharacterImageError"
                           />
                         </span>
@@ -861,6 +935,22 @@
                   v-for="weapon in card.weaponRows"
                   :key="weapon.name"
                   class="scheme-weapon-item"
+                  v-memo="[
+                    locale,
+                    weapon.isSelected,
+                    weapon.isExcluded,
+                    weapon.baseDim,
+                    weapon.baseConflict,
+                    weapon.baseLocked,
+                    weapon.note,
+                    card.baseOverflow,
+                    card.lockType,
+                    tutorialActive,
+                    tutorialStepKey,
+                    tutorialTargetSchemeKey,
+                    card.schemeKey,
+                    isTutorialGuideWeapon(weapon.name),
+                  ]"
                   :class="{
                     'is-selected': weapon.isSelected,
                     'base-selectable': card.baseOverflow,
@@ -878,7 +968,13 @@
                 >
                   <div class="scheme-weapon-title">
                     <div class="weapon-mini" :style="rarityBadgeStyle(weapon.rarity, hasImage(weapon))">
-                      <img v-if="hasImage(weapon)" :src="weaponImageSrc(weapon)" :alt="weapon.name" />
+                      <img
+                        v-if="hasImage(weapon)"
+                        :src="weaponImageSrc(weapon)"
+                        :alt="weapon.name"
+                        loading="lazy"
+                        decoding="async"
+                      />
                       <span v-else class="weapon-fallback">{{ weapon.rarity }}★</span>
                     </div>
                     <span v-if="weaponCharacters(weapon).length" class="weapon-avatars">
@@ -889,6 +985,7 @@
                         :src="characterImageSrc(character)"
                         :alt="tTerm('character', character)"
                         loading="lazy"
+                        decoding="async"
                         @error="handleCharacterImageError"
                       />
                     </span>
@@ -1082,6 +1179,7 @@
                     :src="item.src"
                     :alt="item.label ? t(item.label) : ''"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div v-if="item.label" class="about-sponsor-label">
                     {{ t(item.label) }}

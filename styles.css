@@ -2680,6 +2680,10 @@
         color: var(--accent-2);
       }
 
+      html.low-gpu {
+        --bg-image: none;
+      }
+
       html.low-gpu *,
       html.low-gpu *::before,
       html.low-gpu *::after {
@@ -2689,87 +2693,51 @@
         text-shadow: none !important;
         filter: none !important;
         backdrop-filter: none !important;
+        mix-blend-mode: normal !important;
       }
 
       html.low-gpu body {
-        background-image: linear-gradient(140deg, rgba(11, 15, 20, 0.96), rgba(16, 23, 34, 0.96));
+        background: var(--bg-0);
+        background-image: none;
         background-attachment: scroll;
       }
 
-      html.low-gpu body::before {
-        display: none;
-      }
-
+      html.low-gpu body::before,
       html.low-gpu body::after {
         display: none;
       }
 
       html.low-gpu .panel,
+      html.low-gpu .card,
       html.low-gpu .about-card,
       html.low-gpu .notice-card,
       html.low-gpu .domain-card,
-      html.low-gpu .secondary-panel {
-        backdrop-filter: none;
-        box-shadow: none;
-      }
-
-      html.low-gpu .panel,
-      html.low-gpu .about-card,
-      html.low-gpu .notice-card,
-      html.low-gpu .domain-card,
-      html.low-gpu .repo-link {
-        background: rgba(14, 20, 30, 0.94);
+      html.low-gpu .secondary-panel,
+      html.low-gpu .filter-panel,
+      html.low-gpu .perf-notice,
+      html.low-gpu .perf-status,
+      html.low-gpu .lock-summary {
+        background: var(--bg-1);
+        background-image: none;
       }
 
       html.low-gpu .repo-link::before {
         display: none;
       }
 
-      html.low-gpu .weapon-item.is-selected,
-      html.low-gpu .ghost-button,
-      html.low-gpu .about-button,
-      html.low-gpu .filter-panel,
-      html.low-gpu .repo-link {
-        box-shadow: none;
-      }
-
-      html.low-gpu .tutorial-scheme-highlight {
-        box-shadow: none;
-      }
-
-      html.low-gpu .tutorial-highlight {
-        outline: 1px solid rgba(255, 214, 140, 0.6);
-        outline-offset: 0;
-        background: rgba(255, 210, 140, 0.04);
-        box-shadow: none;
-      }
-
-      html.low-gpu .weapon-item::before,
-      html.low-gpu .weapon-item.rarity-6 .weapon-band,
-      html.low-gpu .weapon-item.rarity-5 .weapon-band,
-      html.low-gpu .weapon-item.rarity-6 .weapon-name,
-      html.low-gpu .weapon-item.rarity-5 .weapon-name {
-        background-image: none;
-      }
-
-      html.low-gpu .weapon-item::after {
-        display: none;
+      html.low-gpu .card {
+        contain: layout paint;
       }
 
       html.low-gpu .weapon-item {
-        background: rgba(12, 14, 18, 0.98);
+        content-visibility: auto;
+        contain-intrinsic-size: 124px 124px;
+        contain: layout paint;
       }
 
-      html.low-gpu .weapon-band {
-        background-image: linear-gradient(
-          to top,
-          rgba(10, 14, 22, 0.8),
-          rgba(10, 14, 22, 0.15)
-        );
-        background-color: transparent;
+      html.low-gpu .scheme-weapon-item {
+        content-visibility: auto;
+        contain-intrinsic-size: 72px 72px;
+        contain: layout paint;
       }
 
-      html.low-gpu .weapon-name {
-        background-image: none;
-        background-color: rgba(10, 14, 22, 0.86);
-      }
