@@ -333,7 +333,8 @@
                 class="ghost-button"
                 :class="{
                   'is-active': showWeaponAttrs,
-                  'tutorial-highlight': tutorialActive && tutorialStepKey === 'show-attrs'
+                  'tutorial-highlight': tutorialActive && tutorialStepKey === 'show-attrs',
+                  'attr-hint-target': showAttrHint
                 }"
                 @click="toggleShowWeaponAttrs"
               >
@@ -351,6 +352,20 @@
               {{ t("清空属性筛选") }}
             </button>
           </div>
+          <transition name="fade-scale">
+            <div v-if="showAttrHint" class="attr-hint">
+              <span class="attr-hint-text">
+                {{
+                  t("提示：点击“{label}”按钮，可切换显示属性和排除功能。", {
+                    label: t("显示属性/排除/备注管理")
+                  })
+                }}
+              </span>
+              <button class="ghost-button attr-hint-dismiss" @click="dismissAttrHint">
+                {{ t("知道了") }}
+              </button>
+            </div>
+          </transition>
           <div class="filter-panel" :class="{ 'is-collapsed': !showFilterPanel }">
             <div class="filter-group">
               <div class="filter-title">{{ t("基础属性") }}</div>

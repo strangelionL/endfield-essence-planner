@@ -66,6 +66,8 @@
         updateWeaponNote: state.updateWeaponNote,
         toggleShowWeaponAttrs: state.toggleShowWeaponAttrs,
         showWeaponAttrs: state.showWeaponAttrs,
+        showAttrHint: state.showAttrHint,
+        dismissAttrHint: state.dismissAttrHint,
         showFilterPanel: state.showFilterPanel,
         showAllSchemes: state.showAllSchemes,
         showBackToTop: state.showBackToTop,

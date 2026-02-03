@@ -17,6 +17,36 @@
         margin-left: auto;
       }
 
+      .attr-hint {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 10px;
+        margin: 4px 0 12px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px dashed rgba(77, 214, 201, 0.35);
+        background: rgba(12, 18, 28, 0.75);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .attr-hint-text {
+        flex: 1;
+        min-width: 160px;
+      }
+
+      .attr-hint-dismiss {
+        padding: 4px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .attr-hint-target {
+        border-color: rgba(77, 214, 201, 0.7);
+        box-shadow: 0 0 0 2px rgba(77, 214, 201, 0.25);
+      }
+
       .filter-panel {
         border-radius: var(--radius-md);
         border: 1px solid var(--stroke);

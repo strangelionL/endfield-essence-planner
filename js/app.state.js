@@ -15,6 +15,7 @@
     state.legacyExcludedKey = "excluded-notes:v1";
     state.tutorialStorageKey = "planner-tutorial:v1";
     state.uiStateStorageKey = "planner-ui-state:v1";
+    state.attrHintStorageKey = "planner-attr-hint:v1";
     state.noticeSkipKey = "announcement:skip";
     state.legacyNoticePrefix = "announcement:skip:";
     state.perfModeStorageKey = "planner-perf-mode:v1";
@@ -38,6 +39,7 @@
     state.appReady = ref(false);
     state.mobilePanel = ref("weapons");
     state.showWeaponAttrs = ref(false);
+    state.showAttrHint = ref(false);
     state.showFilterPanel = ref(true);
     state.showAllSchemes = ref(false);
     state.conflictOpenMap = ref({});

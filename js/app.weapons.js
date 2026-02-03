@@ -67,6 +67,32 @@
       }
     };
 
+    const readAttrHintSeen = () => {
+      try {
+        return localStorage.getItem(state.attrHintStorageKey) === "seen";
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const markAttrHintSeen = () => {
+      try {
+        localStorage.setItem(state.attrHintStorageKey, "seen");
+      } catch (error) {
+        // ignore storage errors
+      }
+    };
+
+    const dismissAttrHint = () => {
+      if (!state.showAttrHint.value) return;
+      state.showAttrHint.value = false;
+      markAttrHintSeen();
+    };
+
+    if (!readAttrHintSeen() && !state.showWeaponAttrs.value) {
+      state.showAttrHint.value = true;
+    }
+
     const toggleExclude = (weapon) => {
       if (!weapon || !weapon.name) return;
       const current = getWeaponMark(weapon.name);
@@ -136,6 +162,9 @@
 
     const toggleShowWeaponAttrs = () => {
       state.showWeaponAttrs.value = !state.showWeaponAttrs.value;
+      if (state.showWeaponAttrs.value) {
+        dismissAttrHint();
+      }
     };
 
     const clearSelection = () => {
@@ -195,5 +224,6 @@
     state.hasAttributeFilters = hasAttributeFilters;
     state.filteredWeapons = filteredWeapons;
     state.trackEvent = trackEvent;
+    state.dismissAttrHint = dismissAttrHint;
   };
 })();

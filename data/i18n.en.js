@@ -57,6 +57,7 @@ window.I18N["en"] = {
     "搜索武器 / 属性...": "Search weapons / attributes...",
     "隐藏属性/排除/备注管理": "Hide attributes/exclude/notes",
     "显示属性/排除/备注管理": "Show attributes/exclude/notes",
+    "提示：点击“{label}”按钮，可切换显示属性和排除功能。": "Tip: click \"{label}\" to toggle attribute display and exclusions.",
     "折叠属性筛选": "Collapse filters",
     "展开属性筛选": "Expand filters",
     "清空属性筛选": "Clear attribute filters",
