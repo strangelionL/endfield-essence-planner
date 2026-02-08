@@ -39,6 +39,24 @@
   background: rgba(31, 200, 183, 0.12);
 }
 
+[data-theme="light"] .switch-toggle .switch-track {
+  border-color: rgba(22, 44, 72, 0.26);
+  background: rgba(22, 44, 72, 0.08);
+}
+
+[data-theme="light"] .switch-toggle .switch-thumb {
+  background: #ffffff;
+}
+
+[data-theme="light"] .switch-toggle .switch-track.on {
+  border-color: rgba(31, 200, 183, 0.55);
+  background: rgba(31, 200, 183, 0.26);
+}
+
+[data-theme="light"] .switch-toggle .switch-track.on .switch-thumb {
+  background: #f6fffd;
+}
+
 [data-theme="light"] .about-button {
   border-color: rgba(22, 44, 72, 0.2);
   background: rgba(255, 255, 255, 0.75);
@@ -304,6 +322,43 @@
 
 [data-theme="light"] .lang-label {
   color: #1a2a3d;
+}
+
+[data-theme="light"] .ai-notice {
+  border-color: rgba(22, 44, 72, 0.24);
+  background: rgba(255, 255, 255, 0.9);
+  color: #2f465f;
+}
+
+[data-theme="light"] .mobile-hint {
+  border-color: rgba(22, 44, 72, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+  color: #425a75;
+}
+
+[data-theme="light"] .mobile-tab {
+  border-color: rgba(22, 44, 72, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  color: #4c617b;
+}
+
+[data-theme="light"] .mobile-tab:hover {
+  border-color: rgba(22, 44, 72, 0.35);
+  color: #243e5a;
+  background: rgba(246, 251, 255, 0.96);
+}
+
+[data-theme="light"] .mobile-tab.active {
+  border-color: rgba(31, 200, 183, 0.55);
+  background: rgba(223, 248, 245, 0.95);
+  color: #154763;
+  box-shadow: 0 8px 20px rgba(44, 77, 118, 0.18);
+}
+
+[data-theme="light"] .mobile-tab .count {
+  border-color: rgba(22, 44, 72, 0.18);
+  background: rgba(244, 248, 255, 0.95);
+  color: #2e4763;
 }
 
 [data-theme="light"] .search-box {

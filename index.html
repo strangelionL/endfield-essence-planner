@@ -706,22 +706,18 @@
                   <div class="plan-config-item">
                     <div class="secondary-label">{{ t("方案显示") }}</div>
                     <button
-                      class="ghost-button toggle-button"
+                      class="ghost-button toggle-button switch-toggle"
                       :class="{ 'is-active': recommendationConfig.hideExcluded }"
                       :title="t('开启后，排除的武器将不会出现在方案推荐列表中。')"
-                      :aria-pressed="recommendationConfig.hideExcluded ? 'true' : 'false'"
+                      role="switch"
+                      :aria-checked="recommendationConfig.hideExcluded ? 'true' : 'false'"
                       @click="recommendationConfig.hideExcluded = !recommendationConfig.hideExcluded"
                     >
-                      <span>{{ t("隐藏已排除武器") }}</span>
-                      <span
-                        class="toggle-state"
-                        :class="{ on: recommendationConfig.hideExcluded }"
-                        >{{ recommendationConfig.hideExcluded ? t("开") : t("关") }}</span
-                      >
+                      <span class="switch-label">{{ t("隐藏已排除武器") }}</span>
+                      <span class="switch-track" :class="{ on: recommendationConfig.hideExcluded }" aria-hidden="true">
+                        <span class="switch-thumb"></span>
+                      </span>
                     </button>
-                    <div class="secondary-hint">
-                      {{ recommendationConfig.hideExcluded ? t("当前：已启用") : t("当前：未启用") }}
-                    </div>
                   </div>
                   <div class="plan-config-item">
                     <div class="secondary-label">{{ t("地区优先级") }}</div>

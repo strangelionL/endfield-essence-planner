@@ -353,6 +353,49 @@
         box-shadow: 0 0 10px rgba(77, 214, 201, 0.25);
       }
 
+      .switch-toggle {
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .switch-toggle .switch-label {
+        min-width: 0;
+        flex: 1;
+        text-align: left;
+      }
+
+      .switch-toggle .switch-track {
+        width: 40px;
+        height: 22px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background: rgba(255, 255, 255, 0.08);
+        display: inline-flex;
+        align-items: center;
+        padding: 2px;
+        transition: 0.2s ease;
+        flex: 0 0 auto;
+      }
+
+      .switch-toggle .switch-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: rgba(230, 233, 239, 0.9);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+
+      .switch-toggle .switch-track.on {
+        border-color: rgba(77, 214, 201, 0.6);
+        background: rgba(77, 214, 201, 0.2);
+      }
+
+      .switch-toggle .switch-track.on .switch-thumb {
+        transform: translateX(18px);
+        background: #dffff8;
+      }
+
       .about-button {
         display: inline-flex;
         align-items: center;
