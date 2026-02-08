@@ -1,0 +1,6 @@
+This product includes the following third-party software:
+
+- Vue.js (https://vuejs.org/) licensed under the MIT License.
+  Bundled file: vendor/vue.global.prod.js
+
+For license details, see LICENSE and the third-party notices within vendor files (if any).

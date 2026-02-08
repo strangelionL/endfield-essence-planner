@@ -37,11 +37,13 @@
     state.skipNotice = ref(false);
 
     state.appReady = ref(false);
+    state.currentView = ref("planner");
     state.mobilePanel = ref("weapons");
     state.showWeaponAttrs = ref(false);
     state.showAttrHint = ref(false);
     state.showFilterPanel = ref(true);
     state.showAllSchemes = ref(false);
+    state.hideExcludedInPlans = ref(false);
     state.conflictOpenMap = ref({});
     state.showBackToTop = ref(false);
 

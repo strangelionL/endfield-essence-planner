@@ -19,6 +19,7 @@
     "./js/app.search.js",
     "./js/app.ui.js",
     "./js/app.storage.js",
+    "./js/app.analytics.js",
     "./js/app.embed.js",
     "./js/app.perf.js",
     "./js/app.background.js",
@@ -28,6 +29,8 @@
     "./js/app.recommendations.display.js",
     "./js/app.modals.js",
     "./js/app.media.js",
+    "./js/app.strategy.js",
+    "./js/app.reforging.js",
     "./js/app.main.js",
   ];
 

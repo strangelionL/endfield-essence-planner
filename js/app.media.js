@@ -2,6 +2,12 @@
   const modules = (window.AppModules = window.AppModules || {});
 
   modules.initMedia = function initMedia(ctx, state) {
+    const formatMediaPath = (path) => {
+      if (!path) return "";
+      if (/^(https?:)?\/\//.test(path)) return encodeURI(path);
+      if (path.startsWith("./") || path.startsWith("../")) return encodeURI(path);
+      return encodeURI(`./${path.replace(/^\/+/, "")}`);
+    };
     const hasImage = (weapon) => weaponImages.has(weapon.name);
     const weaponImageSrc = (weapon) => {
       if (!weapon) return "";
@@ -33,7 +39,18 @@
       state.characterImageSrcCache.set(name, src);
       return src;
     };
+    const characterCardSrc = (character) => {
+      if (!character) return "";
+      if (character.card) return formatMediaPath(character.card);
+      const name = character.name || character.id;
+      if (!name) return "";
+      return encodeURI(`./image/characters/${name}_card.png`);
+    };
     const handleCharacterImageError = (event) => {
+      const target = event && event.target;
+      if (target) target.style.display = "none";
+    };
+    const handleCharacterCardError = (event) => {
       const target = event && event.target;
       if (target) target.style.display = "none";
     };
@@ -57,7 +74,9 @@
     state.weaponImageSrc = weaponImageSrc;
     state.weaponCharacters = weaponCharacters;
     state.characterImageSrc = characterImageSrc;
+    state.characterCardSrc = characterCardSrc;
     state.handleCharacterImageError = handleCharacterImageError;
+    state.handleCharacterCardError = handleCharacterCardError;
     state.rarityBadgeStyle = rarityBadgeStyle;
     state.rarityTextStyle = rarityTextStyle;
   };

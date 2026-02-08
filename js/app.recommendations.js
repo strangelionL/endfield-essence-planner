@@ -71,6 +71,7 @@
 
       const selectedSet = new Set(state.selectedNames.value);
       const excludedSet = state.excludedNameSet.value;
+      const hideExcludedInPlans = state.hideExcludedInPlans.value;
       const schemes = [];
 
       dungeons.forEach((dungeon) => {
@@ -160,7 +161,9 @@
             overflow: baseOverflow && !baseAutoPick.includes(key),
           }));
 
-          const planWeapons = schemeWeaponsSorted.slice();
+          const planWeapons = hideExcludedInPlans
+            ? schemeWeaponsSorted.filter((weapon) => !excludedSet.has(weapon.name))
+            : schemeWeaponsSorted.slice();
           const incompatibleSelected = targets
             .filter((weapon) => !isWeaponCompatible(weapon, dungeon, option))
             .slice()

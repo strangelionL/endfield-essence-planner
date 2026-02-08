@@ -34,6 +34,7 @@
       init("initSearch");
       init("initUi");
       init("initStorage");
+      init("initAnalytics");
       init("initEmbed");
       init("initPerf");
       init("initBackground");
@@ -43,8 +44,180 @@
       init("initRecommendationDisplay");
       init("initModals");
       init("initMedia");
+      init("initStrategy");
+      init("initReforging");
+
+      const weaponCatalog =
+        typeof window !== "undefined" && Array.isArray(window.WEAPONS) ? window.WEAPONS : [];
+      const weaponNameSet = new Set(weaponCatalog.map((weapon) => weapon.name));
+      const parseWeaponNames = (params) => {
+        if (!params) return [];
+        const entries = [];
+        const packed = params.get("weapons");
+        if (packed) {
+          entries.push(...packed.split(","));
+        }
+        const repeated = params.getAll("weapon");
+        if (repeated.length) {
+          entries.push(...repeated);
+        }
+        if (!entries.length) return [];
+        const unique = Array.from(
+          new Set(entries.map((name) => (name || "").trim()).filter(Boolean))
+        );
+        return unique.filter((name) => weaponNameSet.has(name));
+      };
+
+      const parseRoute = () => {
+        if (typeof window === "undefined") {
+          return { view: state.currentView.value };
+        }
+        const params = new URLSearchParams(window.location.search || "");
+        const view = params.get("view") || "planner";
+        const characterId = params.get("operator");
+        const hasWeaponParam = params.has("weapons") || params.has("weapon");
+        const weaponNames = hasWeaponParam ? parseWeaponNames(params) : [];
+        if (view === "strategy") {
+          return { view: "strategy", characterId, weaponNames, hasWeaponParam };
+        }
+        if (view === "reforging") {
+          return { view: "reforging", weaponNames, hasWeaponParam };
+        }
+        return { view: "planner", weaponNames, hasWeaponParam };
+      };
+
+      const hasCharacter = (id) =>
+        id &&
+        Array.isArray(state.characters) &&
+        state.characters.some((char) => char && char.id === id);
+
+      let applyingRoute = false;
+
+      const applyRoute = (route) => {
+        if (!route) return;
+        applyingRoute = true;
+        state.currentView.value = route.view || "planner";
+        if (route.view === "strategy") {
+          const resolvedId = hasCharacter(route.characterId) ? route.characterId : null;
+          if (resolvedId && typeof state.selectCharacter === "function") {
+            state.selectCharacter(resolvedId);
+          } else {
+            state.selectedCharacterId.value = resolvedId;
+          }
+        }
+        if (route.view === "planner" && route.hasWeaponParam) {
+          state.selectedNames.value = Array.isArray(route.weaponNames) ? route.weaponNames : [];
+        }
+        applyingRoute = false;
+      };
+
+      const buildQuery = () => {
+        const view = state.currentView.value;
+        const params = new URLSearchParams();
+        if (view && view !== "planner") {
+          params.set("view", view);
+        }
+        if (view === "strategy") {
+          const id = state.selectedCharacterId.value;
+          if (id) params.set("operator", id);
+        }
+        if (view === "planner") {
+          const selected = Array.isArray(state.selectedNames.value)
+            ? state.selectedNames.value.filter((name) => weaponNameSet.has(name))
+            : [];
+          if (selected.length) {
+            params.set("weapons", selected.join(","));
+          }
+        }
+        const query = params.toString();
+        return query ? `?${query}` : "";
+      };
+
+      const buildAnalyticsPath = () => {
+        const view = state.currentView.value;
+        if (view === "strategy") {
+          const id = state.selectedCharacterId.value;
+          if (id) return `/strategy/${encodeURIComponent(id)}`;
+          return "/strategy";
+        }
+        if (view === "reforging") {
+          return "/reforging";
+        }
+        return "/planner";
+      };
+
+      const buildAnalyticsUrl = () => {
+        if (typeof window === "undefined") return "";
+        const pathname = window.location.pathname || "";
+        const base = pathname.endsWith("/")
+          ? pathname.slice(0, -1)
+          : pathname.endsWith(".html")
+          ? pathname.replace(/\/[^/]*$/, "")
+          : pathname;
+        const path = buildAnalyticsPath();
+        if (!base) return path;
+        return `${base}${path}`;
+      };
+
+      const trackPageview = () => {
+        if (typeof state.trackPageview !== "function") return;
+        if (typeof window === "undefined") return;
+        state.trackPageview({
+          url: buildAnalyticsUrl(),
+          path: buildAnalyticsPath(),
+          view: state.currentView.value,
+          title: document.title,
+        });
+      };
+
+      const syncQuery = (replace = false) => {
+        if (typeof window === "undefined") return;
+        if (applyingRoute) return;
+        const nextQuery = buildQuery();
+        const nextUrl = `${window.location.pathname}${nextQuery}`;
+        const currentUrl = `${window.location.pathname}${window.location.search || ""}`;
+        if (nextUrl === currentUrl) return;
+        if (replace) {
+          window.history.replaceState(null, "", nextUrl);
+        } else {
+          window.history.pushState(null, "", nextUrl);
+        }
+        return nextUrl;
+      };
+
+      onMounted(() => {
+        const route = parseRoute();
+        applyRoute(route);
+        syncQuery(true);
+        trackPageview();
+        if (typeof window !== "undefined") {
+          window.addEventListener("popstate", () => {
+            applyRoute(parseRoute());
+            trackPageview();
+          });
+        }
+      });
+
+      watch([state.currentView, state.selectedCharacterId], () => {
+        syncQuery(false);
+        trackPageview();
+      });
+
+      watch(
+        state.selectedNames,
+        () => {
+          if (state.currentView.value !== "planner") return;
+          syncQuery(true);
+        },
+        { deep: true }
+      );
 
       return {
+        currentView: state.currentView,
+        setView: (view) => {
+          state.currentView.value = view;
+          window.scrollTo(0, 0);
+        },
         locale: state.locale,
         languageOptions: state.languageOptions,
         langSwitchRef: state.langSwitchRef,
@@ -70,6 +243,7 @@
         dismissAttrHint: state.dismissAttrHint,
         showFilterPanel: state.showFilterPanel,
         showAllSchemes: state.showAllSchemes,
+        hideExcludedInPlans: state.hideExcludedInPlans,
         showBackToTop: state.showBackToTop,
         scrollToTop: state.scrollToTop,
         tutorialActive: state.tutorialActive,
@@ -138,8 +312,11 @@
         weaponImageSrc: state.weaponImageSrc,
         weaponCharacters: state.weaponCharacters,
         characterImageSrc: state.characterImageSrc,
+        characterCardSrc: state.characterCardSrc,
         handleCharacterImageError: state.handleCharacterImageError,
+        handleCharacterCardError: state.handleCharacterCardError,
         announcement: state.announcement,
+        formatNoticeItem: state.formatNoticeItem,
         changelog: state.changelog,
         aboutContent: state.aboutContent,
         showAbout: state.showAbout,
@@ -168,6 +345,23 @@
         customBackgroundApi: state.customBackgroundApi,
         handleBackgroundFile: state.handleBackgroundFile,
         clearCustomBackground: state.clearCustomBackground,
+        // Strategy Module
+        characters: state.characters,
+        selectedCharacterId: state.selectedCharacterId,
+        currentCharacter: state.currentCharacter,
+        currentGuide: state.currentGuide,
+        skillLevelLabels: state.skillLevelLabels,
+        getSkillTables: state.getSkillTables,
+        guideRows: state.guideRows,
+        teamSlots: state.teamSlots,
+        strategyCategory: state.strategyCategory,
+        strategyTab: state.strategyTab,
+        selectCharacter: state.selectCharacter,
+        setStrategyCategory: state.setStrategyCategory,
+        setStrategyTab: state.setStrategyTab,
+        backToCharacterList: state.backToCharacterList,
+        guideBeforeLeave: state.guideBeforeLeave,
+        guideEnter: state.guideEnter,
       };
     },
   }).mount("#app");

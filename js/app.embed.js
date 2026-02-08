@@ -6,6 +6,7 @@
 
     const content = state.content || window.CONTENT || {};
     const currentHost = ref(window.location.hostname);
+    const isFileProtocol = window.location.protocol === "file:";
     const allowedHosts = new Set(["end.canmoe.com", "127.0.0.1", "localhost"]);
     const embedAllowedHosts = new Set(
       Array.isArray(content.embed?.allowedHosts) ? content.embed.allowedHosts : []
@@ -49,9 +50,11 @@
     }
 
     const showDomainWarning = ref(
-      isEmbedded.value
-        ? !(isCurrentHostTrusted && isEmbedTrusted.value)
-        : !isCurrentHostTrusted
+      isFileProtocol
+        ? false
+        : isEmbedded.value
+          ? !(isCurrentHostTrusted && isEmbedTrusted.value)
+          : !isCurrentHostTrusted
     );
     const warningCountdown = ref(10);
     let warningTimer = null;

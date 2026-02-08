@@ -42,6 +42,9 @@
       if (typeof raw.showAllSchemes === "boolean") {
         next.showAllSchemes = raw.showAllSchemes;
       }
+      if (typeof raw.hideExcludedInPlans === "boolean") {
+        next.hideExcludedInPlans = raw.hideExcludedInPlans;
+      }
       if (mobilePanels.has(raw.mobilePanel)) {
         next.mobilePanel = raw.mobilePanel;
       }
@@ -90,6 +93,9 @@
           }
           if (typeof restored.showAllSchemes === "boolean") {
             state.showAllSchemes.value = restored.showAllSchemes;
+          }
+          if (typeof restored.hideExcludedInPlans === "boolean") {
+            state.hideExcludedInPlans.value = restored.hideExcludedInPlans;
           }
           if (restored.mobilePanel) {
             state.mobilePanel.value = restored.mobilePanel;
@@ -203,6 +209,7 @@
       showWeaponAttrs: state.showWeaponAttrs.value,
       showFilterPanel: state.showFilterPanel.value,
       showAllSchemes: state.showAllSchemes.value,
+      hideExcludedInPlans: state.hideExcludedInPlans.value,
       filterS1: state.filterS1.value,
       filterS2: state.filterS2.value,
       filterS3: state.filterS3.value,

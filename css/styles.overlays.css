@@ -426,6 +426,25 @@
         color: var(--muted);
       }
 
+      .notice-card .notice-link {
+        color: #e8f6ff;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(77, 214, 201, 0.5);
+        padding-bottom: 1px;
+      }
+
+      .notice-card .notice-link:hover {
+        color: #ffffff;
+        border-bottom-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .notice-card .notice-highlight {
+        background: rgba(255, 214, 102, 0.18);
+        color: #ffe7b8;
+        border-radius: 4px;
+        padding: 0 4px;
+      }
+
       .notice-card .notice-qq {
         margin-top: 10px;
         padding: 8px 10px;

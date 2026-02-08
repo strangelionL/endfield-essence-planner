@@ -60,12 +60,13 @@
 
     const getWeaponNote = (name) => getWeaponMark(name).note || "";
 
-    const trackEvent = (name, data) => {
+    const defaultTrackEvent = (name, data) => {
       if (typeof window === "undefined") return;
       if (window.umami && typeof window.umami.track === "function") {
         window.umami.track(name, data);
       }
     };
+    const trackEvent = typeof state.trackEvent === "function" ? state.trackEvent : defaultTrackEvent;
 
     const readAttrHintSeen = () => {
       try {
@@ -137,9 +138,12 @@
         }))
     );
 
-    const selectedWeapons = computed(() =>
-      selectedWeaponRows.value.filter((weapon) => !weapon.isExcluded)
-    );
+    const selectedWeapons = computed(() => {
+      const rows = selectedWeaponRows.value;
+      const active = rows.filter((weapon) => !weapon.isExcluded);
+      if (!active.length && rows.length === 1) return rows;
+      return active;
+    });
 
     const selectedNameSet = computed(() => new Set(state.selectedNames.value));
 

@@ -1,0 +1,207 @@
+(function () {
+  window.characters = window.characters || [];
+  window.characters.push({
+    id: "perlica",
+    name: "佩丽卡",
+    avatar: "image/characters/佩丽卡.png",
+    rarity: 4,
+    weaponType: "施术单元",
+    mainAbility: "智识",
+    subAbility: "意志",
+    element: "电磁",
+    role: "辅助",
+    profession: "辅助",
+    stats: {
+      strength: "",
+      agility: "",
+      intellect: "",
+      will: "",
+      attack: "",
+      hp: ""
+    },
+    skills: [
+      {
+        name: "电磁脉冲",
+        icon: "",
+        description: "释放电磁脉冲，对周围敌人造成伤害并使其短暂麻痹。",
+        dataTables: [
+          {
+            title: "技能数据",
+            rows: [
+              {
+                name: "伤害倍率",
+                values: {
+                  levels: ["150%", "165%", "180%"]
+                }
+              },
+              {
+                name: "麻痹效果",
+                value: "短暂"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    talents: [
+      { name: "战术指挥", icon: "", description: "全队攻击速度提升 5%。" }
+    ],
+    potentials: ["费用-1", "天赋增强", "攻击+20", "再部署-5s", "费用-1"],
+    materials: {
+      elite1: ["装置 x2", "异铁 x2"],
+      elite2: ["全新装置 x4", "异铁组 x3"]
+    },
+    baseSkills: [
+      { name: "行政", description: "控制中枢心情消耗 -0.05" },
+      { name: "企划", description: "会客室线索搜集速度 +10%" }
+    ],
+    guide: {
+      gearRows: [
+        {
+          weapons: [
+            { name: "典范", icon: "image/典范.png" }
+          ],
+          equipment: [
+            { name: "轻超域护板", icon: "image/gear/5/轻超域护板.png", rarity: 5 },
+            { name: "轻超域护手", icon: "image/gear/5/轻超域护手.png", rarity: 5 },
+            { name: "轻超域分析环", icon: "image/gear/5/轻超域分析环.png", rarity: 5 },
+            { name: "轻超域稳定盘", icon: "image/gear/5/轻超域稳定盘.png", rarity: 5 }
+          ]
+        },
+        {
+          weapons: [
+            { name: "爆破单元", icon: "image/爆破单元.png" }
+          ],
+          equipment: [
+            { name: "阿伯莉轻甲", icon: "image/gear/4/阿伯莉轻甲.png", rarity: 4 },
+            { name: "阿伯莉手甲", icon: "image/gear/4/阿伯莉手甲.png", rarity: 4 },
+            { name: "阿伯莉侦听芯片", icon: "image/gear/4/阿伯莉侦听芯片.png", rarity: 4 },
+            { name: "阿伯莉传感芯片", icon: "image/gear/4/阿伯莉传感芯片.png", rarity: 4 }
+          ]
+        }
+      ],
+      analysis: "",
+      teamTips: "",
+      operationTips: "",
+      skillTips: "优先强化电磁脉冲与控制相关天赋，保证控制时长与覆盖率。",
+      teamSlots: [
+        {
+          options: [
+            {
+              name: "余烬",
+              weapons: [
+                { name: "热熔切割器", icon: "image/热熔切割器.png" }
+              ],
+              equipment: [
+                { name: "拓荒护甲", icon: "image/gear/5/拓荒护甲.png", rarity: 5 },
+                { name: "拓荒耐蚀手套", icon: "image/gear/5/拓荒耐蚀手套.png", rarity: 5 },
+                { name: "拓荒通信器", icon: "image/gear/5/拓荒通信器.png", rarity: 5 },
+                { name: "拓荒增量供氧栓", icon: "image/gear/5/拓荒增量供氧栓.png", rarity: 5 }
+              ]
+            },
+            {
+              name: "余烬(下位)",
+              tag: "下位",
+              weapons: [
+                { name: "大雷斑", icon: "image/大雷斑.png" }
+              ],
+              equipment: [
+                { name: "矿场防护服·壹型", icon: "image/gear/4/矿场防护服·壹型.png", rarity: 4 },
+                { name: "矿场护手·壹型", icon: "image/gear/4/矿场护手·壹型.png", rarity: 4 },
+                { name: "矿场联络仪·壹型", icon: "image/gear/4/矿场联络仪·壹型.png", rarity: 4 },
+                { name: "矿场传动轮·壹型", icon: "image/gear/4/矿场传动轮·壹型.png", rarity: 4 }
+              ]
+            }
+          ]
+        },
+        {
+          options: [
+            {
+              name: "陈千语",
+              weapons: [
+                { name: "作品：蚀迹", icon: "image/作品：蚀迹.png" }
+              ],
+              equipment: [
+                { name: "轻超域护板", icon: "image/gear/5/轻超域护板.png", rarity: 5 },
+                { name: "轻超域护手", icon: "image/gear/5/轻超域护手.png", rarity: 5 },
+                { name: "轻超域分析环", icon: "image/gear/5/轻超域分析环.png", rarity: 5 },
+                { name: "轻超域稳定盘", icon: "image/gear/5/轻超域稳定盘.png", rarity: 5 }
+              ]
+            },
+            {
+              name: "陈千语(下位)",
+              tag: "下位",
+              weapons: [
+                { name: "白夜新星", icon: "image/白夜新星.png" }
+              ],
+              equipment: [
+                { name: "阿伯莉轻甲", icon: "image/gear/4/阿伯莉轻甲.png", rarity: 4 },
+                { name: "阿伯莉手甲", icon: "image/gear/4/阿伯莉手甲.png", rarity: 4 },
+                { name: "阿伯莉侦听芯片", icon: "image/gear/4/阿伯莉侦听芯片.png", rarity: 4 },
+                { name: "阿伯莉传感芯片", icon: "image/gear/4/阿伯莉传感芯片.png", rarity: 4 }
+              ]
+            }
+          ]
+        },
+        {
+          options: [
+            {
+              name: "管理员",
+              weapons: [
+                { name: "宏愿", icon: "image/宏愿.png" }
+              ],
+              equipment: [
+                { name: "轻超域护板", icon: "image/gear/5/轻超域护板.png", rarity: 5 },
+                { name: "轻超域护手", icon: "image/gear/5/轻超域护手.png", rarity: 5 },
+                { name: "轻超域分析环", icon: "image/gear/5/轻超域分析环.png", rarity: 5 },
+                { name: "轻超域稳定盘", icon: "image/gear/5/轻超域稳定盘.png", rarity: 5 }
+              ]
+            },
+            {
+              name: "管理员(下位)",
+              tag: "下位",
+              weapons: [
+                { name: "古渠", icon: "image/古渠.png" }
+              ],
+              equipment: [
+                { name: "阿伯莉轻甲", icon: "image/gear/4/阿伯莉轻甲.png", rarity: 4 },
+                { name: "阿伯莉手甲", icon: "image/gear/4/阿伯莉手甲.png", rarity: 4 },
+                { name: "阿伯莉侦听芯片", icon: "image/gear/4/阿伯莉侦听芯片.png", rarity: 4 },
+                { name: "阿伯莉传感芯片", icon: "image/gear/4/阿伯莉传感芯片.png", rarity: 4 }
+              ]
+            }
+          ]
+        },
+        {
+          options: [
+            {
+              name: "佩丽卡",
+              weapons: [
+                { name: "典范", icon: "image/典范.png" }
+              ],
+              equipment: [
+                { name: "轻超域护板", icon: "image/gear/5/轻超域护板.png", rarity: 5 },
+                { name: "轻超域护手", icon: "image/gear/5/轻超域护手.png", rarity: 5 },
+                { name: "轻超域分析环", icon: "image/gear/5/轻超域分析环.png", rarity: 5 },
+                { name: "轻超域稳定盘", icon: "image/gear/5/轻超域稳定盘.png", rarity: 5 }
+              ]
+            },
+            {
+              name: "佩丽卡(下位)",
+              tag: "下位",
+              weapons: [
+                { name: "爆破单元", icon: "image/爆破单元.png" }
+              ],
+              equipment: [
+                { name: "阿伯莉轻甲", icon: "image/gear/4/阿伯莉轻甲.png", rarity: 4 },
+                { name: "阿伯莉手甲", icon: "image/gear/4/阿伯莉手甲.png", rarity: 4 },
+                { name: "阿伯莉侦听芯片", icon: "image/gear/4/阿伯莉侦听芯片.png", rarity: 4 },
+                { name: "阿伯莉传感芯片", icon: "image/gear/4/阿伯莉传感芯片.png", rarity: 4 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  });
+})();

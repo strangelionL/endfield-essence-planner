@@ -83,7 +83,11 @@
     };
 
     const fallbackPlan = computed(() => {
-      const targets = state.selectedWeapons.value;
+      const hideExcludedInPlans = state.hideExcludedInPlans.value;
+      const excludedSet = hideExcludedInPlans ? state.excludedNameSet.value : null;
+      const targets = hideExcludedInPlans
+        ? state.selectedWeapons.value.filter((weapon) => !excludedSet.has(weapon.name))
+        : state.selectedWeapons.value;
       if (!targets.length) return null;
       if (state.recommendations.value.length) return null;
 
@@ -138,7 +142,10 @@
       window.removeEventListener("resize", scheduleAttrWrap);
     });
 
-    watch([state.showWeaponAttrs, state.showAllSchemes, state.mobilePanel], scheduleAttrWrap);
+    watch(
+      [state.showWeaponAttrs, state.showAllSchemes, state.mobilePanel, state.hideExcludedInPlans],
+      scheduleAttrWrap
+    );
     watch(state.filteredWeapons, scheduleAttrWrap);
     watch(displayRecommendations, scheduleAttrWrap);
     watch(state.conflictOpenMap, scheduleAttrWrap, { deep: true });

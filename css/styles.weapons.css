@@ -134,6 +134,7 @@
 
         .panel-title {
           margin-bottom: 12px;
+          min-height: 32px;
         }
 
         .panel-title h2 {
@@ -364,8 +365,15 @@
       }
 
       .weapon-item.is-selected {
-        border-color: rgba(77, 214, 201, 0.5);
-        box-shadow: 0 0 0 1px rgba(77, 214, 201, 0.35), 0 12px 30px rgba(0, 0, 0, 0.35);
+        border-color: rgba(77, 214, 201, 0.95);
+        box-shadow: 0 0 0 2px rgba(77, 214, 201, 0.5), 0 0 0 6px rgba(77, 214, 201, 0.22),
+          0 20px 34px rgba(0, 0, 0, 0.5);
+        background: radial-gradient(120% 120% at 50% 0%, rgba(77, 214, 201, 0.28), rgba(12, 14, 18, 0.92) 60%);
+      }
+
+      .weapon-item.is-selected .weapon-name {
+        color: #e9fff9;
+        text-shadow: 0 2px 10px rgba(77, 214, 201, 0.35);
       }
 
       .weapon-item.is-excluded {
@@ -417,6 +425,20 @@
         background: rgba(12, 18, 28, 0.98);
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
         z-index: 20;
+      }
+
+      @media (max-width: 720px) {
+        .secondary-panel {
+          position: fixed;
+          top: 68px;
+          left: 12px;
+          right: 12px;
+          min-width: 0;
+          width: auto;
+          max-height: calc(100vh - 96px);
+          overflow: auto;
+          z-index: 60;
+        }
       }
 
       .secondary-item {
@@ -589,6 +611,13 @@
         pointer-events: none;
       }
 
+      .weapon-item.is-selected::after {
+        opacity: 1;
+        border-color: rgba(77, 214, 201, 0.85);
+        background: linear-gradient(135deg, rgba(77, 214, 201, 0.28), rgba(12, 14, 18, 0));
+        box-shadow: 0 0 0 3px rgba(77, 214, 201, 0.45), inset 0 0 24px rgba(77, 214, 201, 0.28);
+      }
+
       .weapon-item:hover::after {
         opacity: 1;
         border-color: rgba(255, 255, 255, 0.75);
@@ -724,6 +753,11 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
       }
 
+      .weapon-item .weapon-avatars .weapon-avatar {
+        width: 36px;
+        height: 36px;
+      }
+
       .scheme-weapon-title .weapon-avatars {
         position: static;
         top: auto;
@@ -746,6 +780,7 @@
         cursor: pointer;
         transition: 0.2s ease;
         min-width: 0;
+        position: relative;
       }
 
       .weapon-attr-item .attr-value {
@@ -756,6 +791,29 @@
 
       .weapon-attr-item:hover {
         border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      .weapon-attr-item.is-selected {
+        border-color: rgba(77, 214, 201, 0.7);
+        background: rgba(18, 34, 40, 0.88);
+        box-shadow: 0 0 0 1px rgba(77, 214, 201, 0.4), 0 10px 18px rgba(0, 0, 0, 0.35);
+      }
+
+      .weapon-attr-item.is-selected::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        border-radius: var(--radius-md) 0 0 var(--radius-md);
+        background: rgba(77, 214, 201, 0.9);
+        box-shadow: 0 0 10px rgba(77, 214, 201, 0.45);
+        pointer-events: none;
+      }
+
+      .weapon-attr-item.is-selected .scheme-weapon-title {
+        color: #e9fff9;
       }
 
       .weapon-attr-item.is-excluded {
